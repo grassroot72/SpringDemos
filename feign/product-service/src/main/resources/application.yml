@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: product-service
+
+server:
+  port: 8089
+
+eureka:
+  client:
+    serviceUrl:
+      # in spring ${HOST} is the placeholder, localhost is the default value
+      # in docker ${HOST} will be set as the container_name
+      # ex. 'service-discovery'
+      defaultZone: http://${SERVICE_DISCOVERY_HOST:localhost}:8761/eureka

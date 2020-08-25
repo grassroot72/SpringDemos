@@ -1,0 +1,5 @@
+# Compile
+javac greetings/Hello.java
+
+# Execute
+java greetings.Hello

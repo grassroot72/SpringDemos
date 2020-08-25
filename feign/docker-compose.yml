@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  discovery-svc:
+    image: discovery-service:1.0
+    build: ./service-discovery
+    container_name: service-discovery-c
+    restart: always
+    ports:
+      - "8761:8761"
+
+  customer-svc:
+    image: customer-service:1.0
+    build: ./customer-service
+    depends_on:
+      - product-svc
+    container_name: customer-service-c
+    restart: always
+    environment:
+      - SERVICE_DISCOVERY_HOST=service-discovery-c
+    ports:
+      - "8090:8090"
+
+  product-svc:
+    image: product-service:1.0
+    build: ./product-service
+    depends_on:
+      - discovery-svc
+    container_name: product-service-c
+    restart: always
+    environment:
+      - SERVICE_DISCOVERY_HOST=service-discovery-c
+    ports:
+      - "8089:8089"
+
+networks:
+  default:
+    external:
+      name: demo-network
